@@ -108,9 +108,6 @@
       }
 
       .message-content {
-        word-wrap: break-word; /* Break long words if necessary */
-        white-space: pre-wrap; /* Preserve whitespace, but wrap text */
-        overflow-wrap: break-word; /* Ensure text wraps inside the container */
         background-color: var(--message-bg);
         padding: 0.75rem 1rem;
         border-radius: 1rem;
@@ -131,21 +128,10 @@
 
       .chat-input {
         display: flex;
+        align-items: flex-end;
         padding: 1.5rem;
         background-color: var(--secondary-color);
         border-top: 1px solid var(--message-bg);
-      }
-
-      #username-input {
-        flex-grow: 1;
-        padding: 0.75rem 1rem;
-        border: none;
-        border-radius: 1.3rem;
-        margin-right: 0.75rem;
-        font-size: 1rem;
-        background-color: var(--input-bg);
-        color: var(--text-color);
-        transition: box-shadow var(--transition-speed);
       }
 
       /* Replaced input with textarea */
@@ -163,19 +149,9 @@
         overflow: hidden; /* Hide scrollbar when not needed */
       }
 
-      #message-input:focus,
-      #username-input:focus {
+      #message-input:focus {
         outline: none;
         box-shadow: 0 0 0 2px var(--primary-light);
-      }
-
-      /* Optional: Adjust the chat input section for better alignment */
-      .chat-input {
-        display: flex;
-        align-items: flex-end;
-        padding: 1.5rem;
-        background-color: var(--secondary-color);
-        border-top: 1px solid var(--message-bg);
       }
 
       #send-button,
@@ -217,50 +193,6 @@
         color: var(--primary-light);
       }
 
-      .system-message {
-        text-align: center;
-        font-style: italic;
-        color: var(--system-message-color);
-        margin: 0.75rem 0;
-        animation: fadeIn 1.3s ease-out;
-      }
-
-      .message.sent {
-        flex-direction: row-reverse;
-      }
-
-      .message.sent .message-content {
-        background-color: var(--primary-color);
-        color: white;
-        margin-left: 0.75rem;
-        margin-right: 0;
-      }
-
-      .message.sent .message-username {
-        text-align: right;
-        color: white;
-      }
-
-      .message.sent img {
-        margin-right: 0;
-        margin-left: 0.75rem;
-      }
-
-      /* Scrollbar Styling */
-      .chat-messages::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      .chat-messages::-webkit-scrollbar-track {
-        background: var(--bg-color);
-      }
-
-      .chat-messages::-webkit-scrollbar-thumb {
-        background-color: var(--primary-color);
-        border-radius: 20px;
-        border: 2px solid var(--bg-color);
-      }
-
       /* Gender select styles with slight right alignment */
       #gender-select {
         appearance: none;
@@ -271,13 +203,12 @@
         border: 1px solid var(--primary-light);
         font-size: 1rem;
         cursor: pointer;
-        transition: box-shadow var(--transition-speed),
-          transform var(--transition-speed);
+        transition: box-shadow var(--transition-speed), transform var(--transition-speed);
         background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"><path d="M10 12l-6-6h12l-6 6z"/></svg>');
         background-repeat: no-repeat;
         background-position: right 1rem center;
         background-size: 1.2rem;
-        margin-left: 0.8rem; /* Move gender select to the right */
+        margin-left: 1rem; /* Move gender select to the right */
       }
 
       #gender-select:focus {
@@ -305,6 +236,29 @@
 
       #gender-select {
         animation: dropdownFade 0.4s ease-out;
+      }
+
+      .system-message {
+        text-align: center;
+        font-style: italic;
+        color: var(--system-message-color);
+        margin: 0.75rem 0;
+        animation: fadeIn 1.3s ease-out;
+      }
+
+      /* Scrollbar Styling */
+      .chat-messages::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .chat-messages::-webkit-scrollbar-track {
+        background: var(--bg-color);
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color);
+        border-radius: 20px;
+        border: 2px solid var(--bg-color);
       }
 
       /* Responsive Design */
@@ -340,55 +294,6 @@
           padding: 0.625rem 1rem;
         }
       }
-
-      @keyframes highlight {
-        0% {
-          background-color: var(--primary-light);
-        }
-        100% {
-          background-color: transparent;
-        }
-      }
-
-      .highlight {
-        animation: highlight 1s ease-out;
-      }
-
-      .typing-indicator {
-        font-style: italic;
-        color: var(--system-message-color);
-        margin-bottom: 0.5rem;
-        margin-left: 1.8rem;
-        padding-left: 5px;
-      }
-
-      .online-users {
-        padding: 0.5rem 1rem;
-        background-color: var(--secondary-color);
-        color: var(--text-color);
-        text-align: center;
-        font-size: 0.9rem;
-        margin-top: 1rem;
-      }
-
-      .theme-toggle {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        background: none;
-        border: none;
-        color: var(--text-color);
-        cursor: pointer;
-        font-size: 1.5rem;
-      }
-
-      .dark-mode {
-        --bg-color: #ffffff;
-        --text-color: #333333;
-        --secondary-color: #f0f0f0;
-        --message-bg: #e0e0e0;
-        --input-bg: #ffffff;
-      }
     </style>
   </head>
   <body>
@@ -402,6 +307,8 @@
         <span id="current-username"></span>
         <input type="text" id="username-input" placeholder="New username" />
         <button id="update-username-button">Update Username</button>
+
+        <!-- Gender selection with enhanced style -->
         <select id="gender-select">
           <option value="boy">Male</option>
           <option value="girl">Female</option>
@@ -410,6 +317,7 @@
       <div class="chat-messages" id="chat-messages"></div>
       <div class="typing-indicator" id="typing-indicator"></div>
       <div class="chat-input">
+        <!-- Replaced input with textarea for message input -->
         <textarea
           id="message-input"
           placeholder="Type your message..."
@@ -432,7 +340,6 @@
       const genderSelect = document.getElementById("gender-select");
       const onlineUsersDiv = document.getElementById("online-users");
       const typingIndicator = document.getElementById("typing-indicator");
-      const themeToggle = document.getElementById("theme-toggle");
 
       let currentUsername = "";
       let typingTimeout;
@@ -440,11 +347,6 @@
       socket.on("set_username", (data) => {
         currentUsername = data.username;
         currentUsernameSpan.textContent = `Username: ${currentUsername}`;
-        currentUsernameSpan.classList.add("highlight");
-        setTimeout(
-          () => currentUsernameSpan.classList.remove("highlight"),
-          1000
-        );
       });
 
       socket.on("user_joined", (data) => {
@@ -459,11 +361,6 @@
 
       socket.on("new_message", (data) => {
         addMessage(data.message, "user", data.username, data.avatar);
-        if ("Notification" in window && Notification.permission === "granted") {
-          new Notification(`New message from ${data.username}`, {
-            body: data.message,
-          });
-        }
       });
 
       socket.on("username_updated", (data) => {
@@ -474,11 +371,6 @@
         if (data.old_username === currentUsername) {
           currentUsername = data.new_username;
           currentUsernameSpan.textContent = `Username: ${currentUsername}`;
-          currentUsernameSpan.classList.add("highlight");
-          setTimeout(
-            () => currentUsernameSpan.classList.remove("highlight"),
-            1000
-          );
         }
       });
 
@@ -488,7 +380,7 @@
           clearTimeout(typingTimeout);
           typingTimeout = setTimeout(() => {
             typingIndicator.textContent = "";
-          }, 1100);
+          }, 1200);
         }
       });
 
@@ -500,23 +392,19 @@
       sendButton.addEventListener("click", sendMessage);
       messageInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
-          e.preventDefault(); // Prevent the default action (new line) when just Enter is pressed
-          sendMessage(); // Send the message
+          e.preventDefault();
+          sendMessage();
         }
       });
 
       messageInput.addEventListener("input", () => {
-        messageInput.style.height = "auto"; // Reset the height
-        messageInput.style.height = messageInput.scrollHeight + "px"; // Set height to content height
+        messageInput.style.height = "auto"; // Reset height
+        messageInput.style.height = messageInput.scrollHeight + "px"; // Adjust height to content
         socket.emit("typing", { username: currentUsername });
       });
 
       genderSelect.addEventListener("change", () => {
         socket.emit("update_gender", { gender: genderSelect.value });
-      });
-
-      themeToggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
       });
 
       function sendMessage() {
@@ -579,10 +467,6 @@
 
       function updateOnlineUsers(count) {
         onlineUsersDiv.textContent = `Online: ${count}`;
-      }
-
-      if ("Notification" in window) {
-        Notification.requestPermission();
       }
     </script>
   </body>
